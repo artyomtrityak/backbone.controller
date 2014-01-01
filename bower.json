@@ -1,0 +1,8 @@
+{
+  "name" : "backbone.controller",
+  "version": "0.1",
+  "main": "backbone.controller",
+  "dependencies"  : {
+    "backbone"  : ">=1.0.0"
+  }
+}
