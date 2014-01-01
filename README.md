@@ -7,7 +7,7 @@ Keep controller logic separated, split your routes to controllers.
 
 Usage examples:
 
-1. Basic
+1) Basic
 
 ```js
 var Controller = Backbone.Controller.extend({
@@ -23,7 +23,7 @@ var Controller = Backbone.Controller.extend({
 var searchController = new Controller();
 ```
 
-2. Controller supports default Backbone events
+2) Controller supports default Backbone events
 
 ```js
 var Controller = Backbone.Controller.extend({
@@ -40,7 +40,7 @@ var Controller = Backbone.Controller.extend({
 var catsController = new Controller();
 ```
 
-3. Controller has remove method which just does `this.stopListening()`.
+3) Controller has remove method which just does `this.stopListening()`.
 On remove method controller should make correct remove for all controller views and models.
 Feel free to redefine it.
 
@@ -62,7 +62,8 @@ catsController.remove();
 delete catsController;
 ```
 
-4. Controller can declarative defien routes
+4) Controller supports declarative routes definition.
+
 It's little more complex than previous examples but can be used to keep all routes separately
 which is good idea for any app.
 
@@ -91,7 +92,7 @@ var DogsController = Backbone.Controller.extend({
   routes: {
     '': 'list',
     'dogs': 'list',
-    'dog/:id': 'showDog'
+    'dogs/:id': 'showDog'
   },
 
   initialize: function() {
