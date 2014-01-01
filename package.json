@@ -19,7 +19,7 @@
     "url": "git@github.com:artyomtrityak/backbone.controller.git"
   },
   "scripts": {
-    "test": "node_modules/.bin/karma start tests/config.js --single-run --browsers=Chrome"
+    "test": "node_modules/.bin/karma start tests/config.js --single-run --browsers=PhantomJS"
   },
   "dependencies": {
     "backbone": ">=1.0.0"
