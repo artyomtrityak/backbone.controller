@@ -5,6 +5,8 @@ Controller for Backbone MV*
 
 Keep controller logic separated, split your routes to controllers.
 
+## Usage
+
 Usage examples:
 
 1) Basic
@@ -122,3 +124,41 @@ var Application = Backbone.Router.extend({
 
 The main idea - pass `{router: routerInstance}` as controller option.
 This allows to define controller specific routes in separated controllers.
+
+
+## Dependencies loading
+
+### Require.js AMD
+
+```js
+requirejs.config({
+  baseUrl: 'static/',
+  urlArgs: 'bust=' +  Date.now(),
+  paths: {
+    jquery: 'assets/js/jquery',
+    underscore: 'assets/js/underscore',
+    backbone: 'assets/js/backbone',
+    controller: 'assets/js/backbone.controller'
+  },
+
+  shim: {
+    backbone: {
+      deps: ['underscore', 'jquery'],
+      exports: 'Backbone'
+    },
+    controller: {
+      deps: ['underscore', 'backbone']
+    },
+    app: ['controller']
+  }
+});
+```
+
+### Old style
+
+```html
+<script src="assets/js/jquery.js" />
+<script src="assets/js/underscore.js" />
+<script src="assets/js/backbone.js" />
+<script src="assets/js/backbone.controller.js" />
+```
