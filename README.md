@@ -65,7 +65,7 @@ delete catsController;
 4) Controller supports declarative routes definition.
 
 It's little more complex than previous examples but can be used to keep all routes separately
-which is good idea for any app.
+which is good idea for any size app.
 
 
 ```js

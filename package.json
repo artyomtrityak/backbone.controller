@@ -1,0 +1,21 @@
+{
+  "name": "Backbone.Controller",
+  "main": "backbone.controller",
+  "description": "Controller for Backbone.js applications",
+  "version": "0.1.0",
+  "author" : "Artyom Trityak <art.trityak@gmail.com>",
+  "url": "https://github.com/artyomtrityak/backbone.controller",
+  "license": "MIT",
+  "keywords": ["controller", "backbone", "router", "server", "client", "browser"],
+  "repository": {
+    "type" : "git",
+    "url" : "git@github.com:artyomtrityak/backbone.controller.git"
+  },
+  "scripts": {
+  },
+  "dependencies": {
+    "backbone": ">=1.0.0"
+  },
+  "devDependencies": {
+  }
+}
