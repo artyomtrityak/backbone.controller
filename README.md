@@ -1,6 +1,7 @@
 Backbone.Controller
-[![Build Status](https://travis-ci.org/artyomtrityak/backbone.controller.png)](https://travis-ci.org/artyomtrityak/backbone.controller)
 ===================
+
+[![Build Status](https://travis-ci.org/artyomtrityak/backbone.controller.png)](https://travis-ci.org/artyomtrityak/backbone.controller)
 
 Controller for Backbone MV*
 
