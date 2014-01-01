@@ -4,18 +4,28 @@
 //     For all details and documentation:
 //     https://github.com/artyomtrityak/backbone.controller
 
-(function(){
+(function(root, factory) {
 
-  var root = this, Backbone, _;
+  // Set up Backbone.Controller appropriately for the environment. Start with AMD.
+  if (typeof define === 'function' && define.amd) {
+    define(['underscore', 'backbone', 'exports'], function(_, Backbone, exports) {
+      // Export global even in AMD case in case this script is loaded with
+      // others that may still expect a global Backbone.
+      root.Backbone.Controller = factory(root, exports, _, Backbone);
+    });
 
-  // Using AMD / CommonJS or window.
-  if (typeof exports === 'object') {
-    Backbone = require('backbone');
-    _ = require('underscore');
+  // Next for Node.js or CommonJS.
+  } else if (typeof exports !== 'undefined') {
+    var _ = require('underscore'),
+        Backbone = require('Backbone');
+    factory(root, exports, _, Backbone);
+
+  // Finally, as a browser global.
   } else {
-    Backbone = root.Backbone;
-    _ = root._;
+    root.Backbone.Controller = factory(root, {}, root._, root.Backbone);
   }
+
+}(this, function(root, exports, _, Backbone) {
 
   // Binds your routes to Backbone router.
   // Allows define routes separated in each controller.
@@ -84,4 +94,6 @@
     }
   });
 
-}).call(this);
+  return Backbone.Controller;
+
+}));
