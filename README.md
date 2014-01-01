@@ -2,6 +2,7 @@ Backbone.Controller
 ===================
 
 Controller for Backbone MV*
+
 Keep controller logic separated, split your routes to controllers.
 
 Usage examples:
