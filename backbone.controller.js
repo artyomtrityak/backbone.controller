@@ -1,4 +1,4 @@
-//     Backbone.Controller 0.1.0
+//     Backbone.Controller 0.2.0
 //     (c) Artyom Trityak
 //     Backbone.Controller may be freely distributed under the MIT license.
 //     For all details and documentation:

@@ -7,6 +7,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'tests/vendor/sinon.js',
       'tests/vendor/chai.js',
       'tests/vendor/jquery.js',
       'tests/vendor/underscore.js',
