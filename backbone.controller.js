@@ -1,4 +1,4 @@
-//     Backbone.Controller 0.2.0
+//     Backbone.Controller 0.3.0
 //     (c) Artyom Trityak
 //     Backbone.Controller may be freely distributed under the MIT license.
 //     For all details and documentation:
@@ -12,6 +12,7 @@
       // Export global even in AMD case in case this script is loaded with
       // others that may still expect a global Backbone.
       root.Backbone.Controller = factory(root, exports, _, Backbone);
+      return root.Backbone.Controller;
     });
 
   // Next for Node.js or CommonJS.
@@ -72,15 +73,20 @@
       // Last controller with same URL will be used.
       Router.route(url, url, _.bind(this[methodName], this));
     }
-  };
+  },
+  cachedRouter;
 
   Backbone.Controller = function(options){
     this.options = options || {};
     if (_.isFunction(this.initialize)){
       this.initialize(this.options);
     }
+    if (this.options.router === true) {
+      cachedRouter = cachedRouter || new Backbone.Router();
+      this.options.router = cachedRouter;
+    }
     if (this.options.router) {
-      bindRoutes.call(this, this.options.router)
+      bindRoutes.call(this, this.options.router);
     }
   };
   

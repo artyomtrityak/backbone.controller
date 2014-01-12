@@ -11,7 +11,7 @@ Keep controller logic separated, split your routes to controllers.
 
 Usage examples:
 
-1) Basic
+###Basic
 
 ```js
 var Controller = Backbone.Controller.extend({
@@ -27,7 +27,7 @@ var Controller = Backbone.Controller.extend({
 var searchController = new Controller();
 ```
 
-2) Controller supports default Backbone events
+###Controller supports default Backbone events
 
 ```js
 var Controller = Backbone.Controller.extend({
@@ -44,7 +44,7 @@ var Controller = Backbone.Controller.extend({
 var catsController = new Controller();
 ```
 
-3) Controller has remove method which just does `this.stopListening()`.
+###Controller has remove method which just does `this.stopListening()`.
 On remove method controller should make correct remove for all controller views and models.
 Feel free to redefine it.
 
@@ -127,6 +127,51 @@ var Application = Backbone.Router.extend({
 The main idea - pass `{router: routerInstance}` as controller option.
 This allows to define controller specific routes in separated controllers.
 
+### Controller can automatically add router without creating Backbone.Router instance
+
+```js
+var CatsController = Backbone.Controller.extend({
+  routes: {
+    'cats': 'list',
+    'cats/:id': 'showCat'
+  },
+
+  initialize: function() {
+    // do some init stuff
+  },
+
+  list: function() {
+    // show cats list
+  },
+
+  showCat: function(catId) {
+    // show cat view
+  }
+});
+
+var DogsController = Backbone.Controller.extend({
+  routes: {
+    '': 'list',
+    'dogs': 'list',
+    'dogs/:id': 'showDog'
+  },
+
+  initialize: function() {
+    // do some init stuff
+  },
+
+  list: function() {
+    // show dogs list
+  },
+
+  showDog: function(catId) {
+    // show cat view
+  }
+});
+
+var cats = new CatsController({router: true});
+var dogs = new DogsController({router: true});
+```
 
 ## Dependencies loading
 

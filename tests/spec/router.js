@@ -3,6 +3,10 @@ var expect = chai.expect,
 
 describe('Backbone.Controller routes', function(){
 
+  before(function() {
+    Backbone.history.start();
+  })
+
   beforeEach(function() {
     router = new Backbone.Router();
     sinon.spy(router, 'route');
@@ -43,10 +47,26 @@ describe('Backbone.Controller routes', function(){
 
     expect(router.route.calledWith('test/', 'test/')).to.be.equal(true);
 
-    Backbone.history.start();
-
     router.navigate('test/', {trigger: true});
     
+    expect(callback.callCount).to.be.equal(1);
+  });
+
+  it('should support auto router', function() {
+    var Controller, controllerIns, callback;
+
+    callback = sinon.stub()
+
+    Controller = Backbone.Controller.extend({
+      routes: {
+        'test2/': 'method1'
+      },
+      method1: callback
+    });
+
+    controllerIns = new Controller({router: true});
+
+    router.navigate('test2/', {trigger: true});
     expect(callback.callCount).to.be.equal(1);
   });
 
