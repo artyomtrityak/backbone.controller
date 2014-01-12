@@ -2,6 +2,7 @@ Backbone.Controller
 ===================
 
 [![Build Status](https://travis-ci.org/artyomtrityak/backbone.controller.png)](https://travis-ci.org/artyomtrityak/backbone.controller)
+[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
 Controller for Backbone MV*
 
