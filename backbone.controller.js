@@ -65,6 +65,20 @@
   //    }
   //  });
   //   
+  //  ========
+  //
+  //  Auto router
+  //
+  //  var CatsController = Backbone.Controller.extend({
+  //    routes: {
+  //      '': 'index',
+  //      'cat/:query/p:page': 'showCat'
+  //    }
+  //    ...
+  //  });
+  //
+  //  var cats = new CatsController({router: true});
+  //
   var bindRoutes = function(Router) {
     for (var url in this.routes) {
       var methodName = this.routes[url];
@@ -82,6 +96,7 @@
       this.initialize(this.options);
     }
     if (this.options.router === true) {
+      // Save/get to/from closure router instance for binding routes
       cachedRouter = cachedRouter || new Backbone.Router();
       this.options.router = cachedRouter;
     }

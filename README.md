@@ -202,6 +202,17 @@ requirejs.config({
 });
 ```
 
+### CommonJS
+
+```js
+var Controller = require('controller');
+// or require Backbone, both fine
+
+var HomeController = Controller.extend({
+  ...
+});
+```
+
 ### Old style
 
 ```html

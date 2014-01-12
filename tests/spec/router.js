@@ -70,4 +70,37 @@ describe('Backbone.Controller routes', function(){
     expect(callback.callCount).to.be.equal(1);
   });
 
+  it('should work correct with many controllers', function() {
+    var Controller1, controllerIns1, callback1,
+        Controller2, controllerIns2, callback2;
+
+    callback1 = sinon.stub()
+    callback2 = sinon.stub()
+
+    Controller1 = Backbone.Controller.extend({
+      routes: {
+        'test3/': 'method1'
+      },
+      method1: callback1
+    });
+
+    Controller2 = Backbone.Controller.extend({
+      routes: {
+        'test4/': 'method1'
+      },
+      method1: callback2
+    });
+
+    controllerIns1 = new Controller1({router: true});
+    controllerIns2 = new Controller2({router: true});
+
+    expect(callback1.callCount).to.be.equal(0);
+    router.navigate('test3/', {trigger: true});
+    expect(callback1.callCount).to.be.equal(1);
+
+    expect(callback2.callCount).to.be.equal(0);
+    router.navigate('test4/', {trigger: true});
+    expect(callback1.callCount).to.be.equal(1);
+  });
+
 });
