@@ -44,7 +44,8 @@ var Controller = Backbone.Controller.extend({
 var catsController = new Controller();
 ```
 
-###Controller has remove method which just does `this.stopListening()`.
+###Controller has remove method which just stops listening events
+
 On remove method controller should make correct remove for all controller views and models.
 Feel free to redefine it.
 
@@ -66,7 +67,7 @@ catsController.remove();
 delete catsController;
 ```
 
-4) Controller supports declarative routes definition.
+### Controller supports declarative routes definition.
 
 It's little more complex than previous examples but can be used to keep all routes separately
 which is good idea for any size app.
