@@ -1,12 +1,9 @@
 module.exports = function(grunt) {
-
   grunt.initConfig({
-
     jshint: {
       options: {
         browser: true,
         globals: {
-          requirejs: true,
           console: true
         }
       },
@@ -25,11 +22,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-karma');
 
-  grunt.registerTask('test', 'runs all test tasks', function() {
-    var tasks = ['jshint', 'karma'];
-    grunt.option('force', true);
-    grunt.task.run(tasks);
-  });
-
-  grunt.registerTask('default', ['run']);
+  grunt.registerTask('test', ['jshint', 'karma']);
+  grunt.registerTask('default', ['test']);
 };
