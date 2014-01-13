@@ -73,6 +73,18 @@
   //    routes: {
   //      '': 'index',
   //      'cat/:query/p:page': 'showCat'
+  //    },
+  //
+  //    onBeforeRequest: function() {
+  //      // do before request actions
+  //    },
+  //
+  //    onAfterRequest: function() {
+  //      // do after request actions
+  //    },
+  //
+  //    remove: function() {
+  //      // make cleanup
   //    }
   //    ...
   //  });
@@ -81,14 +93,40 @@
   //
   var bindRoutes = function(Router) {
     for (var url in this.routes) {
-      var methodName = this.routes[url];
       // Using default Backbone.js route method.
       // Same URLs from different controllers are not allowed.
       // Last controller with same URL will be used.
-      Router.route(url, url, _.bind(this[methodName], this));
+      Router.route(url, url, _.bind(function() {
+        var args = _.toArray(arguments),
+            url = args.slice(0)[0],
+            methodName = this.routes[url]
+            params = args.slice(1);
+
+        // Call remove if router goes to another controller
+        if (cachedController && cachedController !== this &&
+          typeof cachedController.remove === 'function') {
+
+          cachedController.remove.apply(cachedController);
+        }
+        cachedController = this;
+
+        // Call onBeforeRoute before route
+        if (typeof this.onBeforeRoute === 'function') {
+          this.onBeforeRoute.apply(this, params);
+        }
+
+        // Call route method with routing parameters like :id, *path etc
+        this[methodName].apply(this, params);
+
+        // Call onAfterRoute after route
+        if (typeof this.onAfterRoute === 'function') {
+          this.onAfterRoute.apply(this, params);
+        }
+      }, this, url));
     }
   },
-  cachedRouter;
+  cachedRouter,
+  cachedController;
 
   Backbone.Controller = function(options){
     this.options = options || {};
@@ -105,7 +143,7 @@
     }
   };
   
-  Backbone.Controller.extend = Backbone.History.extend;
+  Backbone.Controller.extend = Backbone.Router.extend;
   
   // Supporting default Backbone events like on, off, trigger, listenTo etc
   // Provides remove method which can be called on controller removal.
