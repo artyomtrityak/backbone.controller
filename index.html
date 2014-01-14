@@ -244,7 +244,27 @@ This allows to define controller specific routes in separated controllers.</p>
   <span class="p">}</span>
 <span class="p">});</span>
 
-<span class="kd">var</span> <span class="nx">cats</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CatsController</span><span class="p">({</span><span class="nx">router</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span>
+<span class="kd">var</span> <span class="nx">dogs</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DogsController</span><span class="p">({</span><span class="nx">router</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span>
+</pre></div>
+
+<h3>
+<a name="redirecting-to-another-route" class="anchor" href="#redirecting-to-another-route"><span class="octicon octicon-link"></span></a>Redirecting to another route</h3>
+
+<p>If declarative routing used in projects, you don't have access directly to Router instance.
+Backbone Controller provides Controller.navigate method as proxy for Backbone.Router.navigate method.</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">DogsController</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Controller</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="nx">routes</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s1">'dogs'</span><span class="o">:</span> <span class="s1">'list'</span>
+  <span class="p">},</span>
+
+  <span class="nx">list</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// show dogs list</span>
+    <span class="c1">// if something</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">navigate</span><span class="p">(</span><span class="s1">'cats/'</span><span class="p">,</span> <span class="p">{</span><span class="nx">trigger</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
 <span class="kd">var</span> <span class="nx">dogs</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DogsController</span><span class="p">({</span><span class="nx">router</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span>
 </pre></div>
 
