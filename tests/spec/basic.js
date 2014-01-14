@@ -39,5 +39,4 @@ describe('Backbone.Controller', function(){
     expect(controllerInstance.stopListening.callCount).to.be.equal(1);
 
   });
-
 });

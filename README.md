@@ -215,7 +215,27 @@ var DogsController = Backbone.Controller.extend({
   }
 });
 
-var cats = new CatsController({router: true});
+var dogs = new DogsController({router: true});
+```
+
+### Redirecting to another route
+
+If declarative routing used in projects, you don't have access directly to Router instance.
+Backbone Controller provides redirect method as proxy for Backbone.Router.navigate method.
+
+```js
+var DogsController = Backbone.Controller.extend({
+  routes: {
+    'dogs': 'list'
+  },
+
+  list: function() {
+    // show dogs list
+    // if something
+    this.navigate('cats/', {trigger: true});
+  }
+});
+
 var dogs = new DogsController({router: true});
 ```
 

@@ -160,4 +160,40 @@ describe('Backbone.Controller routes', function(){
     expect(afterCallback.callCount).to.be.equal(1);
   });
 
+  it('should support navigate', function() {
+    var Controller, controllerIns, callback1, callback2;
+
+    callback1 = sinon.stub();
+    callback2 = sinon.stub();
+
+    Controller = Backbone.Controller.extend({
+      routes: {
+        'test6/': 'method1',
+        'test7/': 'method2'
+      },
+      method1: callback1,
+      method2: callback2
+    });
+
+    controllerIns = new Controller({router: true});
+
+    expect(controllerIns.navigate).to.be.a('function');
+    expect(callback1.callCount).to.be.equal(0);
+    expect(callback2.callCount).to.be.equal(0);
+
+    controllerIns.navigate('test6/');
+
+    expect(callback1.callCount).to.be.equal(0);
+    expect(callback2.callCount).to.be.equal(0);
+
+    controllerIns.navigate('test7/', {trigger: true});
+
+    expect(callback1.callCount).to.be.equal(0);
+    expect(callback2.callCount).to.be.equal(1);
+
+    controllerIns.navigate('test6/', {trigger: true});
+
+    expect(callback1.callCount).to.be.equal(1);
+    expect(callback2.callCount).to.be.equal(1);
+  });
 });

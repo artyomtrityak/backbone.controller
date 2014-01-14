@@ -48,6 +48,8 @@
   //
   //    showCat: function(query, page) {
   //      // create cat model and view
+  //      // if something - call navigate as proxy to Backbone.Router.navigate
+  //      this.navigate('dogs/', {trigger: true});
   //    }
   //  });
   //
@@ -139,9 +141,16 @@
       this.options.router = cachedRouter;
     }
     if (this.options.router) {
+      cachedRouter = this.options.router;
       bindRoutes.call(this, this.options.router);
     }
   };
+
+  // Method uses cached Backbone Router and allows navigate to another route
+  Backbone.Controller.prototype.navigate = function() {
+    var params = _.toArray(arguments).slice(0);
+    cachedRouter.navigate.apply(this, params);
+  }
   
   Backbone.Controller.extend = Backbone.Router.extend;
   
