@@ -10,6 +10,8 @@ Keep controller logic separated, split your routes to controllers.
 
 ## Usage
 
+DEMO: [Just Test It](https://github.com/artyomtrityak/just-test-it)
+
 Usage examples:
 
 ###Basic
