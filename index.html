@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Backbone.Controller by artyomtrityak</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Backbone.Controller</h1>
+        <h2>Controller for Backbone MV*</h2>
+        <a href="https://github.com/artyomtrityak/backbone.controller" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="backbonecontroller" class="anchor" href="#backbonecontroller"><span class="octicon octicon-link"></span></a>Backbone.Controller</h1>
+
+<p><a href="https://travis-ci.org/artyomtrityak/backbone.controller"><img src="https://travis-ci.org/artyomtrityak/backbone.controller.png" alt="Build Status"></a>
+<a href="http://gruntjs.com/"><img src="https://cdn.gruntjs.com/builtwith.png" alt="Built with Grunt"></a></p>
+
+<p>Controller for Backbone MV*</p>
+
+<p>Keep controller logic separated, split your routes to controllers.</p>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Usage examples:</p>
+
+<h3>
+<a name="basic" class="anchor" href="#basic"><span class="octicon octicon-link"></span></a>Basic</h3>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">Controller</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Controller</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// do init stuff</span>
+  <span class="p">},</span>
+
+  <span class="nx">search</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">query</span><span class="p">,</span> <span class="nx">page</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// create search model and view</span>
+  <span class="p">}</span>
+<span class="p">});</span> 
+
+<span class="kd">var</span> <span class="nx">searchController</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Controller</span><span class="p">();</span>
+</pre></div>
+
+<h3>
+<a name="controller-supports-default-backbone-events" class="anchor" href="#controller-supports-default-backbone-events"><span class="octicon octicon-link"></span></a>Controller supports default Backbone events</h3>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">Controller</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Controller</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">();</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">listenTo</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">,</span> <span class="s1">'add'</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_onAdd</span><span class="p">);</span>
+  <span class="p">},</span>
+
+  <span class="nx">_onAdd</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">model</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// show notification view</span>
+  <span class="p">}</span>
+<span class="p">});</span> 
+
+<span class="kd">var</span> <span class="nx">catsController</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Controller</span><span class="p">();</span>
+</pre></div>
+
+<h3>
+<a name="controller-has-remove-method-for-cleanup" class="anchor" href="#controller-has-remove-method-for-cleanup"><span class="octicon octicon-link"></span></a>Controller has remove method for cleanup</h3>
+
+<p>Remove method should do correct remove for all controller views and models, stop listening controller events and clear state.</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">Controller</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Controller</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">();</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">listenTo</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">,</span> <span class="s1">'add'</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_onAdd</span><span class="p">);</span>
+  <span class="p">},</span>
+
+  <span class="nx">_onAdd</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">model</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// show notification view</span>
+  <span class="p">}</span>
+<span class="p">});</span> 
+
+<span class="kd">var</span> <span class="nx">catsController</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Controller</span><span class="p">();</span>
+<span class="c1">//...</span>
+<span class="nx">catsController</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span>
+<span class="k">delete</span> <span class="nx">catsController</span><span class="p">;</span>
+</pre></div>
+
+<p>Also remove method is calling automatically when user goes from one controller to another. See routing section for details.</p>
+
+<h3>
+<a name="controller-supports-declarative-routes-definition" class="anchor" href="#controller-supports-declarative-routes-definition"><span class="octicon octicon-link"></span></a>Controller supports declarative routes definition.</h3>
+
+<p>It's little more complex than previous examples but can be used to keep all routes separately
+which is good idea for any size app.</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">CatsController</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Controller</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="nx">routes</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s1">'cats'</span><span class="o">:</span> <span class="s1">'list'</span><span class="p">,</span>
+    <span class="s1">'cats/:id'</span><span class="o">:</span> <span class="s1">'showCat'</span>
+  <span class="p">},</span>
+
+  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// do some init stuff</span>
+  <span class="p">},</span>
+
+  <span class="nx">list</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// show cats list</span>
+  <span class="p">},</span>
+
+  <span class="nx">showCat</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">catId</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// show cat view</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">DogsController</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Controller</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="nx">routes</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s1">''</span><span class="o">:</span> <span class="s1">'list'</span><span class="p">,</span>
+    <span class="s1">'dogs'</span><span class="o">:</span> <span class="s1">'list'</span><span class="p">,</span>
+    <span class="s1">'dogs/:id'</span><span class="o">:</span> <span class="s1">'showDog'</span>
+  <span class="p">},</span>
+
+  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// do some init stuff</span>
+  <span class="p">},</span>
+
+  <span class="nx">list</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// show dogs list</span>
+  <span class="p">},</span>
+
+  <span class="nx">showDog</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">catId</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// show cat view</span>
+  <span class="p">},</span>
+
+  <span class="nx">remove</span><span class="o">:</span> <span class="nx">functin</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// cleanup</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">Application</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Router</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="nx">controllers</span><span class="o">:</span> <span class="p">{},</span>
+
+  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">controllers</span><span class="p">.</span><span class="nx">cats</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CatsController</span><span class="p">({</span><span class="nx">router</span><span class="o">:</span> <span class="k">this</span><span class="p">});</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">controllers</span><span class="p">.</span><span class="nx">dogs</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DogsController</span><span class="p">({</span><span class="nx">router</span><span class="o">:</span> <span class="k">this</span><span class="p">});</span>
+
+    <span class="nx">Backbone</span><span class="p">.</span><span class="nx">history</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>The main idea - pass <code>{router: routerInstance}</code> as controller option.
+This allows to define controller specific routes in separated controllers.</p>
+
+<p>When url changes from <code>#dogs</code> / <code>#dogs/:id</code> to any route which defined in another controller, remove method is calling automatically.</p>
+
+<p>This case controller should clear state, remove controller specific views and models.</p>
+
+<h3>
+<a name="controller-can-automatically-add-router-without-creating-backbonerouter-instance" class="anchor" href="#controller-can-automatically-add-router-without-creating-backbonerouter-instance"><span class="octicon octicon-link"></span></a>Controller can automatically add router without creating Backbone.Router instance</h3>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">CatsController</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Controller</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="nx">routes</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s1">'cats'</span><span class="o">:</span> <span class="s1">'list'</span><span class="p">,</span>
+    <span class="s1">'cats/:id'</span><span class="o">:</span> <span class="s1">'showCat'</span>
+  <span class="p">},</span>
+
+  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// do some init stuff</span>
+  <span class="p">},</span>
+
+  <span class="nx">list</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// show cats list</span>
+  <span class="p">},</span>
+
+  <span class="nx">showCat</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">catId</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// show cat view</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">DogsController</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Controller</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="nx">routes</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s1">''</span><span class="o">:</span> <span class="s1">'list'</span><span class="p">,</span>
+    <span class="s1">'dogs'</span><span class="o">:</span> <span class="s1">'list'</span><span class="p">,</span>
+    <span class="s1">'dogs/:id'</span><span class="o">:</span> <span class="s1">'showDog'</span>
+  <span class="p">},</span>
+
+  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// do some init stuff</span>
+  <span class="p">},</span>
+
+  <span class="nx">list</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// show dogs list</span>
+  <span class="p">},</span>
+
+  <span class="nx">showDog</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">catId</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// show cat view</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">cats</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CatsController</span><span class="p">({</span><span class="nx">router</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span>
+<span class="kd">var</span> <span class="nx">dogs</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DogsController</span><span class="p">({</span><span class="nx">router</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span>
+</pre></div>
+
+<h3>
+<a name="before--after-routing" class="anchor" href="#before--after-routing"><span class="octicon octicon-link"></span></a>Before / after routing</h3>
+
+<p>Controller automatically calls <code>onBeforeRoute</code> / <code>onAfterRoute</code> functions when processing routes.</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">DogsController</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Controller</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="nx">routes</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s1">''</span><span class="o">:</span> <span class="s1">'list'</span><span class="p">,</span>
+    <span class="s1">'dogs'</span><span class="o">:</span> <span class="s1">'list'</span>
+  <span class="p">},</span>
+
+  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// do some init stuff</span>
+  <span class="p">},</span>
+
+  <span class="nx">onBeforeRoute</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// called before `#dogs` / `#` routes</span>
+    <span class="c1">// Set some state variables, create controller layout etc</span>
+  <span class="p">},</span>
+
+  <span class="nx">onAfterRoute</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// called after `#dogs` / `#` routes</span>
+  <span class="p">},</span>
+
+  <span class="nx">list</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// show dogs list</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">cats</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CatsController</span><span class="p">({</span><span class="nx">router</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span>
+<span class="kd">var</span> <span class="nx">dogs</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DogsController</span><span class="p">({</span><span class="nx">router</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span>
+</pre></div>
+
+<h2>
+<a name="dependencies-loading" class="anchor" href="#dependencies-loading"><span class="octicon octicon-link"></span></a>Dependencies loading</h2>
+
+<h3>
+<a name="requirejs-amd" class="anchor" href="#requirejs-amd"><span class="octicon octicon-link"></span></a>Require.js AMD</h3>
+
+<div class="highlight highlight-js"><pre><span class="nx">requirejs</span><span class="p">.</span><span class="nx">config</span><span class="p">({</span>
+  <span class="nx">baseUrl</span><span class="o">:</span> <span class="s1">'static/'</span><span class="p">,</span>
+  <span class="nx">urlArgs</span><span class="o">:</span> <span class="s1">'bust='</span> <span class="o">+</span>  <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">(),</span>
+  <span class="nx">paths</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">jquery</span><span class="o">:</span> <span class="s1">'assets/js/jquery'</span><span class="p">,</span>
+    <span class="nx">underscore</span><span class="o">:</span> <span class="s1">'assets/js/underscore'</span><span class="p">,</span>
+    <span class="nx">backbone</span><span class="o">:</span> <span class="s1">'assets/js/backbone'</span><span class="p">,</span>
+    <span class="nx">controller</span><span class="o">:</span> <span class="s1">'assets/js/backbone.controller'</span>
+  <span class="p">},</span>
+
+  <span class="nx">shim</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">backbone</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">deps</span><span class="o">:</span> <span class="p">[</span><span class="s1">'underscore'</span><span class="p">,</span> <span class="s1">'jquery'</span><span class="p">],</span>
+      <span class="nx">exports</span><span class="o">:</span> <span class="s1">'Backbone'</span>
+    <span class="p">},</span>
+    <span class="nx">controller</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">deps</span><span class="o">:</span> <span class="p">[</span><span class="s1">'underscore'</span><span class="p">,</span> <span class="s1">'backbone'</span><span class="p">]</span>
+    <span class="p">},</span>
+    <span class="nx">app</span><span class="o">:</span> <span class="p">[</span><span class="s1">'controller'</span><span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+<h3>
+<a name="commonjs" class="anchor" href="#commonjs"><span class="octicon octicon-link"></span></a>CommonJS</h3>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">Controller</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'controller'</span><span class="p">);</span>
+<span class="c1">// or require Backbone, both fine</span>
+
+<span class="kd">var</span> <span class="nx">HomeController</span> <span class="o">=</span> <span class="nx">Controller</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="p">...</span>
+<span class="p">});</span>
+</pre></div>
+
+<h3>
+<a name="old-style" class="anchor" href="#old-style"><span class="octicon octicon-link"></span></a>Old style</h3>
+
+<div class="highlight highlight-html"><pre><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"assets/js/jquery.js"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"assets/js/underscore.js"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"assets/js/backbone.js"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"assets/js/backbone.controller.js"</span> <span class="nt">/&gt;</span>
+</pre></div>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/artyomtrityak/backbone.controller/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/artyomtrityak/backbone.controller/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/artyomtrityak/backbone.controller"></a> is maintained by <a href="https://github.com/artyomtrityak">artyomtrityak</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
