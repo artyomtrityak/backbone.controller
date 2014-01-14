@@ -45,10 +45,9 @@ var Controller = Backbone.Controller.extend({
 var catsController = new Controller();
 ```
 
-###Controller has remove method which just stops listening events
+###Controller has remove method for cleanup
 
-On remove method controller should make correct remove for all controller views and models.
-Feel free to redefine it.
+Remove method should do correct remove for all controller views and models, stop listening controller events and clear state.
 
 ```js
 var Controller = Backbone.Controller.extend({
@@ -67,6 +66,8 @@ var catsController = new Controller();
 catsController.remove();
 delete catsController;
 ```
+
+Also remove method is calling automatically when user goes from one controller to another. See routing section for details.
 
 ### Controller supports declarative routes definition.
 
@@ -111,6 +112,10 @@ var DogsController = Backbone.Controller.extend({
 
   showDog: function(catId) {
     // show cat view
+  },
+
+  remove: functin() {
+    // cleanup
   }
 });
 
@@ -128,6 +133,10 @@ var Application = Backbone.Router.extend({
 
 The main idea - pass `{router: routerInstance}` as controller option.
 This allows to define controller specific routes in separated controllers.
+
+When url changes from `#dogs` / `#dogs/:id` to any route which defined in another controller, remove method is calling automatically.
+
+This case controller should clear state, remove controller specific views and models.
 
 ### Controller can automatically add router without creating Backbone.Router instance
 
@@ -168,6 +177,39 @@ var DogsController = Backbone.Controller.extend({
 
   showDog: function(catId) {
     // show cat view
+  }
+});
+
+var cats = new CatsController({router: true});
+var dogs = new DogsController({router: true});
+```
+
+### Before / after routing
+
+Controller automatically calls `onBeforeRoute` / `onAfterRoute` functions when processing routes.
+
+```js
+var DogsController = Backbone.Controller.extend({
+  routes: {
+    '': 'list',
+    'dogs': 'list'
+  },
+
+  initialize: function() {
+    // do some init stuff
+  },
+
+  onBeforeRoute: function() {
+    // called before `#dogs` / `#` routes
+    // Set some state variables, create controller layout etc
+  },
+
+  onAfterRoute: function() {
+    // called after `#dogs` / `#` routes
+  },
+
+  list: function() {
+    // show dogs list
   }
 });
 
