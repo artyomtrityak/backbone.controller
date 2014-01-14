@@ -220,7 +220,7 @@ var dogs = new DogsController({router: true});
 
 ### Redirecting to another route
 
-If declarative routing used in projects, you don't have access directly to Router instance.
+If declarative routing has been used in project, you don't have access directly to Router instance.
 Backbone Controller provides Controller.navigate method as proxy for Backbone.Router.navigate method.
 
 ```js
