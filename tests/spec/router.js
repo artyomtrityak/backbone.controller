@@ -141,7 +141,8 @@ describe('Backbone.Controller routes', function(){
 
     Controller = Backbone.Controller.extend({
       routes: {
-        'test5/': 'method1'
+        'test5/': 'method1',
+        'test5/:id': 'method1'
       },
       method1: callback,
       onBeforeRoute: beforeCallback,
@@ -152,12 +153,23 @@ describe('Backbone.Controller routes', function(){
 
     expect(beforeCallback.callCount).to.be.equal(0);
     expect(afterCallback.callCount).to.be.equal(0);
+    expect(beforeCallback.calledWith('test5/')).to.be.equal(false);
+    expect(afterCallback.calledWith('test5/')).to.be.equal(false);
 
     router.navigate('test5/', {trigger: true});
 
     expect(callback.callCount).to.be.equal(1);
     expect(beforeCallback.callCount).to.be.equal(1);
     expect(afterCallback.callCount).to.be.equal(1);
+
+    expect(beforeCallback.calledWith('test5/')).to.be.equal(true);
+    expect(afterCallback.calledWith('test5/')).to.be.equal(true);
+
+    router.navigate('test5/24', {trigger: true});
+
+    expect(beforeCallback.calledWith('test5/:id', '24')).to.be.equal(true);
+    expect(afterCallback.calledWith('test5/:id', '24')).to.be.equal(true);
+    expect(callback.calledWith('24')).to.be.equal(true);
   });
 
   it('should support navigate', function() {

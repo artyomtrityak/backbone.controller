@@ -201,12 +201,12 @@ var DogsController = Backbone.Controller.extend({
     // do some init stuff
   },
 
-  onBeforeRoute: function() {
+  onBeforeRoute: function(url, param1, param2, ...) {
     // called before `#dogs` / `#` routes
     // Set some state variables, create controller layout etc
   },
 
-  onAfterRoute: function() {
+  onAfterRoute: function(url, param1, param2, ...) {
     // called after `#dogs` / `#` routes
   },
 

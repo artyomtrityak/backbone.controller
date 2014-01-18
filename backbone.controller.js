@@ -77,11 +77,11 @@
   //      'cat/:query/p:page': 'showCat'
   //    },
   //
-  //    onBeforeRequest: function() {
+  //    onBeforeRequest: function(url, param1, param2 ...) {
   //      // do before request actions
   //    },
   //
-  //    onAfterRequest: function() {
+  //    onAfterRequest: function(url, param1, param2 ...) {
   //      // do after request actions
   //    },
   //
@@ -100,7 +100,7 @@
       // Last controller with same URL will be used.
       Router.route(url, url, _.bind(function() {
         var args = _.toArray(arguments),
-            url = args.slice(0)[0],
+            url = args[0],
             methodName = this.routes[url]
             params = args.slice(1);
 
@@ -114,7 +114,7 @@
 
         // Call onBeforeRoute before route
         if (typeof this.onBeforeRoute === 'function') {
-          this.onBeforeRoute.apply(this, params);
+          this.onBeforeRoute.apply(this, args);
         }
 
         // Call route method with routing parameters like :id, *path etc
@@ -122,7 +122,7 @@
 
         // Call onAfterRoute after route
         if (typeof this.onAfterRoute === 'function') {
-          this.onAfterRoute.apply(this, params);
+          this.onAfterRoute.apply(this, args);
         }
       }, this, url));
     }
