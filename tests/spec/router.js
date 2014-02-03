@@ -5,7 +5,7 @@ describe('Backbone.Controller routes', function(){
 
   before(function() {
     Backbone.history.start();
-  })
+  });
 
   beforeEach(function() {
     router = new Backbone.Router();
@@ -32,7 +32,7 @@ describe('Backbone.Controller routes', function(){
   it('should bind routes with router option', function() {
     var Controller, controllerIns, callback;
 
-    callback = sinon.stub()
+    callback = sinon.stub();
 
     Controller = Backbone.Controller.extend({
       routes: {
@@ -55,7 +55,7 @@ describe('Backbone.Controller routes', function(){
   it('should support auto router', function() {
     var Controller, controllerIns, callback;
 
-    callback = sinon.stub()
+    callback = sinon.stub();
 
     Controller = Backbone.Controller.extend({
       routes: {
@@ -74,10 +74,10 @@ describe('Backbone.Controller routes', function(){
     var Controller1, controllerIns1, callback1, remove1,
         Controller2, controllerIns2, callback2, remove2;
 
-    callback1 = sinon.stub()
-    remove1 = sinon.stub()
-    callback2 = sinon.stub()
-    remove2 = sinon.stub()
+    callback1 = sinon.stub();
+    remove1 = sinon.stub();
+    callback2 = sinon.stub();
+    remove2 = sinon.stub();
 
     Controller1 = Backbone.Controller.extend({
       routes: {

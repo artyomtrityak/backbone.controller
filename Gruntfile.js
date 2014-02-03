@@ -7,7 +7,12 @@ module.exports = function(grunt) {
           console: true
         }
       },
-      all: ['Gruntfile.js', 'static/**/*.js', '!**/assets/**']
+      all: [
+        'Gruntfile.js',
+        'backbone.controller.js',
+        'tests/**/*.js',
+        '!tests/vendor/*.js'
+      ]
     },
 
     karma: {

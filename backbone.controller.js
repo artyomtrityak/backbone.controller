@@ -98,33 +98,34 @@
       // Using default Backbone.js route method.
       // Same URLs from different controllers are not allowed.
       // Last controller with same URL will be used.
-      Router.route(url, url, _.bind(function() {
-        var args = _.toArray(arguments),
-            url = args[0],
-            methodName = this.routes[url]
-            params = args.slice(1);
+      Router.route(url, url, _.bind(onRoute, this, url));
+    }
+  },
+  onRoute = function() {
+    var args = _.toArray(arguments),
+        url = args[0],
+        methodName = this.routes[url],
+        params = args.slice(1);
 
-        // Call remove if router goes to another controller
-        if (cachedController && cachedController !== this &&
-          typeof cachedController.remove === 'function') {
+    // Call remove if router goes to another controller
+    if (cachedController && cachedController !== this &&
+      typeof cachedController.remove === 'function') {
 
-          cachedController.remove.apply(cachedController);
-        }
-        cachedController = this;
+      cachedController.remove.apply(cachedController);
+    }
+    cachedController = this;
 
-        // Call onBeforeRoute before route
-        if (typeof this.onBeforeRoute === 'function') {
-          this.onBeforeRoute.apply(this, args);
-        }
+    // Call onBeforeRoute before route
+    if (typeof this.onBeforeRoute === 'function') {
+      this.onBeforeRoute.apply(this, args);
+    }
 
-        // Call route method with routing parameters like :id, *path etc
-        this[methodName].apply(this, params);
+    // Call route method with routing parameters like :id, *path etc
+    this[methodName].apply(this, params);
 
-        // Call onAfterRoute after route
-        if (typeof this.onAfterRoute === 'function') {
-          this.onAfterRoute.apply(this, args);
-        }
-      }, this, url));
+    // Call onAfterRoute after route
+    if (typeof this.onAfterRoute === 'function') {
+      this.onAfterRoute.apply(this, args);
     }
   },
   cachedRouter,
@@ -150,7 +151,7 @@
   Backbone.Controller.prototype.navigate = function() {
     var params = _.toArray(arguments).slice(0);
     cachedRouter.navigate.apply(this, params);
-  }
+  };
   
   Backbone.Controller.extend = Backbone.Router.extend;
   
