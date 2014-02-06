@@ -3,6 +3,9 @@ Backbone.Controller
 
 [![Build Status](https://travis-ci.org/artyomtrityak/backbone.controller.png)](https://travis-ci.org/artyomtrityak/backbone.controller)
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+<a href="https://twitter.com/intent/tweet?hashtags=&original_referer=https://github.com/&text=Check+out+Backbone.Controller+for+keeping+controller+logic+separated&tw_p=tweetbutton&url=https://github.com/artyomtrityak/backbone.controller" target="_blank">
+  <img src="http://jpillora.com/github-twitter-button/img/tweet.png"></img>
+</a>
 
 Controller for Backbone MV*
 
