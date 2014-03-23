@@ -68,7 +68,6 @@ var Controller = Backbone.Controller.extend({
 var catsController = new Controller();
 //...
 catsController.remove();
-delete catsController;
 ```
 
 Also remove method is calling automatically when user goes from one controller to another. See routing section for details.
