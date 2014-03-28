@@ -287,3 +287,9 @@ var HomeController = Controller.extend({
 <script src="assets/js/backbone.js" />
 <script src="assets/js/backbone.controller.js" />
 ```
+
+### Bower
+
+```sh
+bower install backbone.controller
+```
