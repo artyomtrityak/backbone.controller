@@ -18,7 +18,7 @@
   // Next for Node.js or CommonJS.
   } else if (typeof exports !== 'undefined') {
     var _ = require('underscore'),
-        Backbone = require('Backbone');
+        Backbone = require('backbone');
     module.exports = factory(root, exports, _, Backbone);
 
   // Finally, as a browser global.
