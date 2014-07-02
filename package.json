@@ -13,6 +13,11 @@
     "client",
     "browser"
   ],
+  "engines": {
+    "node": "0.10.28",
+    "npm": "1.4.10"
+  },
+
   "repository": {
     "type": "git",
     "url": "git@github.com:artyomtrityak/backbone.controller.git"
