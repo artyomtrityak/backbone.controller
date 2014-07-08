@@ -217,6 +217,44 @@ var DogsController = Backbone.Controller.extend({
 });
 
 var dogs = new DogsController({router: true});
+
+
+//Cancel route
+var DogsController = Backbone.Controller.extend({
+  routes: {
+    'dogs': 'list',
+    'dogs/:id': 'showDog'
+  },
+
+  initialize: function() {
+    // do some init stuff
+  },
+
+  list: function() {
+    // show dogs list
+  },
+
+  showDog: function(catId) {
+    // show cat view
+  },
+  onBeforeRoute : function(url) {
+    console.log('before route');
+    var deferred = Q.defer();
+
+    setTimeout(function() {
+      deferred.resolve('ggg');
+    }, 2000);
+
+    return deferred.promise;
+    //return false;
+  },
+  onAfterRoute : function() {
+    console.log('afterRoute');
+  }
+});
+
+var dogs = new DogsController({router : true});
+Backbone.history.start();
 ```
 
 ### Redirecting to another route

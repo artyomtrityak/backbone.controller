@@ -105,7 +105,17 @@
     var args = _.toArray(arguments),
         url = args[0],
         methodName = this.routes[url],
-        params = args.slice(1);
+        params = args.slice(1),
+        triggerRouteAndAfterRoute = function() {
+          // Call route method with routing parameters like :id, *path etc
+          this[methodName].apply(this, params);
+
+          // Call onAfterRoute after route
+          if ( _.isFunction(this.onAfterRoute)) {
+            this.onAfterRoute.apply(this, args);
+          }
+        }.bind(this),
+        beforeRouteResult, isPromiseObj;
 
     // Call remove if router goes to another controller
     if (cachedController && cachedController !== this &&
@@ -116,16 +126,17 @@
     cachedController = this;
 
     // Call onBeforeRoute before route
-    if (typeof this.onBeforeRoute === 'function') {
-      this.onBeforeRoute.apply(this, args);
+    if ( _.isFunction(this.onBeforeRoute) ) {
+      beforeRouteResult = this.onBeforeRoute.apply(this, args);
     }
 
-    // Call route method with routing parameters like :id, *path etc
-    this[methodName].apply(this, params);
+    if (beforeRouteResult === false || beforeRouteResult === null) return this;
+    isPromiseObj = beforeRouteResult && beforeRouteResult.done && _.isFunction(beforeRouteResult.done);
 
-    // Call onAfterRoute after route
-    if (typeof this.onAfterRoute === 'function') {
-      this.onAfterRoute.apply(this, args);
+    if (isPromiseObj) {
+      beforeRouteResult.done(triggerRouteAndAfterRoute);
+    } else {
+      triggerRouteAndAfterRoute();
     }
   },
   cachedRouter,
