@@ -4,34 +4,47 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Backbone.Controller by artyomtrityak</title>
-
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
   </head>
   <body>
-    <div class="wrapper">
+
       <header>
         <h1>Backbone.Controller</h1>
         <p>Controller for Backbone MV*</p>
-        <p class="view"><a href="https://github.com/artyomtrityak/backbone.controller">View the Project on GitHub <small>artyomtrityak/backbone.controller</small></a></p>
-        <ul>
-          <li><a href="https://github.com/artyomtrityak/backbone.controller/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/artyomtrityak/backbone.controller/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/artyomtrityak/backbone.controller">View On <strong>GitHub</strong></a></li>
-        </ul>
       </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/artyomtrityak/backbone.controller" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/artyomtrityak/backbone.controller/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/artyomtrityak/backbone.controller/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
       <section>
         <h1>
 <a name="backbonecontroller" class="anchor" href="#backbonecontroller"><span class="octicon octicon-link"></span></a>Backbone.Controller</h1>
 
 <p><a href="https://travis-ci.org/artyomtrityak/backbone.controller"><img src="https://travis-ci.org/artyomtrityak/backbone.controller.png" alt="Build Status"></a>
-<a href="http://gruntjs.com/"><img src="https://cdn.gruntjs.com/builtwith.png" alt="Built with Grunt"></a></p>
+<a href="https://twitter.com/intent/tweet?hashtags=&amp;original_referer=https://github.com/&amp;text=Check+out+Backbone.Controller+for+keeping+controller+logic+separated&amp;tw_p=tweetbutton&amp;url=https://github.com/artyomtrityak/backbone.controller" target="_blank">
+  <img src="http://jpillora.com/github-twitter-button/img/tweet.png"></a></p>
 
 <p>Controller for Backbone MV*</p>
 
@@ -96,7 +109,6 @@
 <span class="kd">var</span> <span class="nx">catsController</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Controller</span><span class="p">();</span>
 <span class="c1">//...</span>
 <span class="nx">catsController</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span>
-<span class="k">delete</span> <span class="nx">catsController</span><span class="p">;</span>
 </pre></div>
 
 <p>Also remove method is calling automatically when user goes from one controller to another. See routing section for details.</p>
@@ -245,6 +257,44 @@ This allows to define controller specific routes in separated controllers.</p>
 <span class="p">});</span>
 
 <span class="kd">var</span> <span class="nx">dogs</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DogsController</span><span class="p">({</span><span class="nx">router</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span>
+
+
+<span class="c1">//Cancel route</span>
+<span class="kd">var</span> <span class="nx">DogsController</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Controller</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="nx">routes</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s1">'dogs'</span><span class="o">:</span> <span class="s1">'list'</span><span class="p">,</span>
+    <span class="s1">'dogs/:id'</span><span class="o">:</span> <span class="s1">'showDog'</span>
+  <span class="p">},</span>
+
+  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// do some init stuff</span>
+  <span class="p">},</span>
+
+  <span class="nx">list</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// show dogs list</span>
+  <span class="p">},</span>
+
+  <span class="nx">showDog</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">catId</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// show cat view</span>
+  <span class="p">},</span>
+  <span class="nx">onBeforeRoute</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'before route'</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">deferred</span> <span class="o">=</span> <span class="nx">Q</span><span class="p">.</span><span class="nx">defer</span><span class="p">();</span>
+
+    <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">deferred</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s1">'ggg'</span><span class="p">);</span>
+    <span class="p">},</span> <span class="mi">2000</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span><span class="p">;</span>
+    <span class="c1">//return false;</span>
+  <span class="p">},</span>
+  <span class="nx">onAfterRoute</span> <span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'afterRoute'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">dogs</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DogsController</span><span class="p">({</span><span class="nx">router</span> <span class="o">:</span> <span class="kc">true</span><span class="p">});</span>
+<span class="nx">Backbone</span><span class="p">.</span><span class="nx">history</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
 </pre></div>
 
 <h3>
@@ -316,12 +366,18 @@ Backbone Controller provides Controller.navigate method as proxy for Backbone.Ro
 <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"assets/js/backbone.js"</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"assets/js/backbone.controller.js"</span> <span class="nt">/&gt;</span>
 </pre></div>
+
+<h3>
+<a name="bower" class="anchor" href="#bower"><span class="octicon octicon-link"></span></a>Bower</h3>
+
+<div class="highlight highlight-sh"><pre>bower install backbone.controller
+</pre></div>
       </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/artyomtrityak">artyomtrityak</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
+      </footer>
     </div>
-    <footer>
-      <p>Project maintained by <a href="https://github.com/artyomtrityak">artyomtrityak</a></p>
-      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
-    </footer>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
   </body>
