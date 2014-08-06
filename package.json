@@ -1,5 +1,5 @@
 {
-  "name": "Backbone.Controller",
+  "name": "backbone.controller",
   "main": "backbone.controller",
   "description": "Controller for Backbone.js applications",
   "version": "0.3.0",

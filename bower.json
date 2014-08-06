@@ -1,7 +1,7 @@
 {
   "name": "backbone.controller",
   "main": "backbone.controller.js",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "homepage": "https://github.com/artyomtrityak/backbone.controller",
   "authors": [
     "Artyom Trityak <art.trityak@gmail.com>"
