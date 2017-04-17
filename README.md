@@ -16,7 +16,7 @@ DEMO: [Just Test It](https://github.com/artyomtrityak/just-test-it)
 
 Usage examples:
 
-###Basic
+### Basic
 
 ```js
 var Controller = Backbone.Controller.extend({
@@ -32,7 +32,7 @@ var Controller = Backbone.Controller.extend({
 var searchController = new Controller();
 ```
 
-###Controller supports default Backbone events
+### Controller supports default Backbone events
 
 ```js
 var Controller = Backbone.Controller.extend({
@@ -49,7 +49,7 @@ var Controller = Backbone.Controller.extend({
 var catsController = new Controller();
 ```
 
-###Controller has remove method for cleanup
+### Controller has remove method for cleanup
 
 Remove method should do correct remove for all controller views and models, stop listening controller events and clear state.
 
